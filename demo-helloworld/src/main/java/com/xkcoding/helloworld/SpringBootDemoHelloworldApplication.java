@@ -26,14 +26,22 @@ public class SpringBootDemoHelloworldApplication {
     /**
      * Hello，World
      *
-     * @param who 参数，非必须
-     * @return Hello, ${who}
+     * @param firstName 参数，非必须
+     * @param lastName 参数，非必须
+     * @return Hello, ${firstName lastName}
      */
     @GetMapping("/hello")
-    public String sayHello(@RequestParam(required = false, name = "who") String who) {
-        if (StrUtil.isBlank(who)) {
-            who = "World";
+    public String sayHello(@RequestParam(required = false, name = "firstName") String firstName, @RequestParam(required = false,  name = "lastName") String lastName) {
+        if (firstName == null) {
+            firstName = "";
         }
-        return StrUtil.format("Hello, {}!", who);
+        if (lastName == null) {
+            lastName = "";
+        }
+        String name = firstName + " " + lastName;
+        if (StrUtil.isBlank(firstName) && StrUtil.isBlank(lastName)) {
+            name = "Spring boot";
+        }
+        return StrUtil.format("Hello, {}!", name);
     }
 }
